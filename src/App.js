@@ -1,33 +1,54 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import './App.css';
 
 function App() {
+  const productsRef = useRef(null);
+
   useEffect(() => {
-  var productsDiv = document.createElement("div");
-  productsDiv.id = "products";
-  document.body.appendChild(productsDiv)
-  fetch('https://dummyjson.com/products')
-  .then(res => res.json())
-  .then(data => {
-    console.log(data)
-    var node, textnode;
-      for (const x in data.products) {
-        node = document.createElement("div");
-        textnode = document.createTextNode(x);
-        node.appendChild(textnode);
-        document.getElementById("products").appendChild(node)
-      }
-  });
-  return () => {
-    document.body.removeChild(productsDiv);
-  }
+    const fetchAndRenderProducts = () => {
+      fetch('https://dummyjson.com/products')
+        .then(res => res.json())
+        .then(data => {
+          renderProducts(data.products);
+        })
+        .catch(error => {
+          console.error('Error fetching products:', error);
+        });
+    };
+
+    const renderProducts = (products) => {
+      const productsDiv = productsRef.current;
+      if (!productsDiv) return;
+
+      products.forEach(product => {
+        const col = document.createElement("div");
+        col.classList.add("col-md-4");
+        const card = document.createElement("div");
+        card.classList.add("card", "mb-4", "shadow-sm");
+        const cardBody = document.createElement("div");
+        cardBody.classList.add("card-body");
+        const cardTitle = document.createElement("h5");
+        cardTitle.classList.add("card-title");
+        cardTitle.innerText = product.title;
+        cardBody.appendChild(cardTitle);
+        card.appendChild(cardBody);
+        col.appendChild(card);
+        productsDiv.appendChild(col);
+      });
+    };
+
+    fetchAndRenderProducts();
+
+    return () => {
+      // Cleanup if needed
+    };
   }, []);
 
-
   return (
-    <>
-      <h1>Products</h1>
-    </>
+    <div className="container">
+      <h1 className="my-4">Products</h1>
+      <div className="row" ref={productsRef}></div>
+    </div>
   );
 }
 
