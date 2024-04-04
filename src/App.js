@@ -4,6 +4,7 @@ import './App.css';
 function App() {
   
   useEffect(() => {
+    var cart = [];
     const createProductsDiv = () => {
       const productsDiv = document.createElement("div");
       productsDiv.id = "products";
@@ -16,25 +17,21 @@ function App() {
       fetch('https://dummyjson.com/products')
         .then(res => res.json())
         .then(data => {
-          renderProducts(data.products, search);
+          renderProducts(data.products);
         })
         .catch(error => {
           console.error('Error fetching products:', error);
         });
     };
 
-    const renderProducts = (products, search) => {
+    const renderProducts = (products) => {
       const productsDiv = document.getElementById("products");
       productsDiv.innerHTML = "";
       if (!productsDiv) return;
       for (const key in products) {
         const product = products[key];
-        console.log(!search);
-        const productTitle = product.title.trim().toUpperCase();
-        const searchModified = search.trim().toUpperCase();
-        if (search === "" || productTitle.includes(searchModified)){
         const col = document.createElement("div");
-        col.classList.add("col-md-4");
+        col.classList.add("col-md-3");
         const card = document.createElement("div");
         card.classList.add("card", "mb-4", "shadow-sm");
         const cardBody = document.createElement("div");
@@ -46,25 +43,49 @@ function App() {
         const cardImage = document.createElement("img");
         cardImage.src = product.images[0]
         cardImage.classList.add("img-fluid");
+        const cardCartButton = document.createElement("button");
+        cardCartButton.classList.add("cartButton");
+        cardCartButton.innerText = "Add to cart";
+        cardCartButton.id = product.id;
         cardBody.appendChild(cardImage);
         cardBody.appendChild(cardTitle);
         cardBody.appendChild(cardPrice);
+        cardBody.appendChild(cardCartButton);
         card.appendChild(cardBody);
         col.appendChild(card);
         productsDiv.appendChild(col)
-        }
+        cardCartButton.onclick = () => addToCart(product.id);
       }
     };
     
     const searchClicked = () => {
-      fetchAndRenderProducts(document.getElementById("search_input").value);
+      const search = document.getElementById("searchInput").value;
+
+      fetch('https://dummyjson.com/products/search?q=' + search)
+        .then(res => res.json())
+        .then(data => {
+          renderProducts(data.products);
+        })
+        .catch(error => {
+          console.error('Error fetching products:', error);
+        });
+    }
+    const addToCart = (id) => {
+      cart.push('https://dummyjson.com/products/1')
+    }
+
+    const openCart = () => {
+      document.getElementById("cartModal").showModal();
+    }
+
+    const closeCart = () =>{
+      document.getElementById("cartModal").close();
     }
     const productsDiv = createProductsDiv();
     fetchAndRenderProducts("");
-    document.getElementById("search_button").onclick = searchClicked;
-    
-
-
+    document.getElementById("searchButton").onclick = () => searchClicked ();
+    document.getElementById("cartButton").onclick = () => openCart ();
+    document.getElementById("closeCartButton").onclick = () => closeCart ();
     return () => {
       document.body.removeChild(productsDiv);
     };
@@ -73,8 +94,12 @@ function App() {
   return (
     <>
       <h1 className="container">Products</h1>
-      <input id="search_input"></input>
-      <button id="search_button">Search</button>
+      <input id="searchInput"></input>
+      <button id="searchButton">Search</button>
+      <button id="cartButton">Cart</button>
+      <dialog id="cartModal">
+        <button id="closeCartButton"></button>
+      </dialog>
     </>
   );
 }
