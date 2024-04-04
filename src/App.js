@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import './App.css';
 
 function App() {
+  
   useEffect(() => {
     const createProductsDiv = () => {
       const productsDiv = document.createElement("div");
@@ -11,11 +12,11 @@ function App() {
       return productsDiv;
     };
 
-    const fetchAndRenderProducts = () => {
+    const fetchAndRenderProducts = (search) => {
       fetch('https://dummyjson.com/products')
         .then(res => res.json())
         .then(data => {
-          renderProducts(data.products, null);
+          renderProducts(data.products, search);
         })
         .catch(error => {
           console.error('Error fetching products:', error);
@@ -24,11 +25,14 @@ function App() {
 
     const renderProducts = (products, search) => {
       const productsDiv = document.getElementById("products");
+      productsDiv.innerHTML = "";
       if (!productsDiv) return;
-
       for (const key in products) {
         const product = products[key];
-        if (!search || product.title.trim().toUpperCase() === search){
+        console.log(!search);
+        const productTitle = product.title.trim().toUpperCase();
+        const searchModified = search.trim().toUpperCase();
+        if (search === "" || productTitle.includes(searchModified)){
         const col = document.createElement("div");
         col.classList.add("col-md-4");
         const card = document.createElement("div");
@@ -51,9 +55,15 @@ function App() {
         }
       }
     };
-
+    
+    const searchClicked = () => {
+      fetchAndRenderProducts(document.getElementById("search_input").value);
+    }
     const productsDiv = createProductsDiv();
-    fetchAndRenderProducts();
+    fetchAndRenderProducts("");
+    document.getElementById("search_button").onclick = searchClicked;
+    
+
 
     return () => {
       document.body.removeChild(productsDiv);
@@ -63,6 +73,8 @@ function App() {
   return (
     <>
       <h1 className="container">Products</h1>
+      <input id="search_input"></input>
+      <button id="search_button">Search</button>
     </>
   );
 }
