@@ -3,8 +3,8 @@ import './App.css';
 
 function App() {
   useEffect(() => {
-    var cart = [];
-    var currentlyDisplayed = [];
+
+
     const displayAll = () => {
       fetch('https://dummyjson.com/products').then(res => res.json()).then(data => {
         for (const key in data.products) {
@@ -37,7 +37,6 @@ function App() {
     }
 
     const makeCard = (product, cart = "") => {
-      
         const card = document.createElement("div");
         card.id = cart + "card" + product.id;
         card.classList.add("card", "mb-4", "shadow-sm");
@@ -58,6 +57,7 @@ function App() {
         return card
     }
     
+
     const renderProduct = (product) => {
       if (!(document.getElementById("card" + product.id))) {
       const col = document.createElement("div");
@@ -74,12 +74,20 @@ function App() {
     }
 
 
+    const removeItemFromCart = (product) => {
+      document.getElementById("cartModal").removeChild(document.getElementById("cartcard" + product.id));
+    }
+
+
     const addToCart = (product) => {
-      const itemCard = makeCard(product, "cart");
-      const removeItemButton = document.createElement("button");
-      removeItemButton.innerText = "Remove Item";
-      document.getElementById("cartModal").appendChild(itemCard);
-      document.getElementById("cartcardBody" + product.id).appendChild(removeItemButton);
+      if (!document.getElementById("cartcard" + product.id)) {
+        const itemCard = makeCard(product, "cart");
+        const removeItemButton = document.createElement("button");
+        removeItemButton.innerText = "Remove Item";
+        document.getElementById("cartModal").appendChild(itemCard);
+        document.getElementById("cartcardBody" + product.id).appendChild(removeItemButton);
+        removeItemButton.onclick = () => removeItemFromCart(product);
+      }
     }
 
 
@@ -87,10 +95,12 @@ function App() {
       document.getElementById("cartModal").showModal();
     }
 
+
     const closeCart = () =>{
       document.getElementById("cartModal").close();
     }
     
+
     createProductsDiv();
     displayAll();
     document.getElementById("searchButton").onclick = () => searchClicked ();
@@ -104,6 +114,7 @@ function App() {
     };
   }, []);
 
+  
   return (
     <>
       <h1 className="container">Products</h1>
@@ -111,7 +122,7 @@ function App() {
       <button id="searchButton">Search</button>
       <button id="cartButton">Cart</button>
       <dialog id="cartModal">
-        <button id="closeCartButton"></button>
+        <button id="closeCartButton">X</button>
       </dialog>
     </>
   );
