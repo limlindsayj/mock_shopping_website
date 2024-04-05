@@ -2,39 +2,47 @@ import React, { useEffect } from 'react';
 import './App.css';
 
 function App() {
-  
   useEffect(() => {
     var cart = [];
+    var currentlyDisplayed = [];
+    const displayAll = () => {
+      fetch('https://dummyjson.com/products').then(res => res.json()).then(data => {
+        for (const key in data.products) {
+          renderProduct(data.products[key])
+        }
+      });
+    }
+
+
     const createProductsDiv = () => {
       const productsDiv = document.createElement("div");
+      productsDiv.innerHTML = "";
       productsDiv.id = "products";
       productsDiv.classList.add("row", "container")
       document.body.appendChild(productsDiv);
       return productsDiv;
     };
 
-    const fetchAndRenderProducts = (search) => {
-      fetch('https://dummyjson.com/products')
-        .then(res => res.json())
-        .then(data => {
-          renderProducts(data.products);
-        })
-        .catch(error => {
-          console.error('Error fetching products:', error);
-        });
-    };
+    
+    const searchClicked = () => {
+      const search = document.getElementById("searchInput").value.trim().toUpperCase();
+      document.getElementById("products").innerHTML = "";
+      fetch('https://dummyjson.com/products').then(res => res.json()).then(data => {
+      for (const key in data.products) {
+        if (data.products[key].title.toUpperCase().includes(search) || data.products[key].category.toUpperCase().includes(search)) {
+          renderProduct(data.products[key])
+        }
+      }
+    });
+    }
 
-    const renderProducts = (products) => {
-      const productsDiv = document.getElementById("products");
-      productsDiv.innerHTML = "";
-      if (!productsDiv) return;
-      for (const key in products) {
-        const product = products[key];
-        const col = document.createElement("div");
-        col.classList.add("col-md-3");
+    const makeCard = (product, cart = "") => {
+      
         const card = document.createElement("div");
+        card.id = cart + "card" + product.id;
         card.classList.add("card", "mb-4", "shadow-sm");
         const cardBody = document.createElement("div");
+        cardBody.id = cart + "cardBody" + product.id;
         cardBody.classList.add("card-body");
         const cardTitle = document.createElement("h5");
         cardTitle.innerText = product.title;
@@ -43,36 +51,37 @@ function App() {
         const cardImage = document.createElement("img");
         cardImage.src = product.images[0]
         cardImage.classList.add("img-fluid");
-        const cardCartButton = document.createElement("button");
-        cardCartButton.classList.add("cartButton");
-        cardCartButton.innerText = "Add to cart";
-        cardCartButton.id = product.id;
         cardBody.appendChild(cardImage);
         cardBody.appendChild(cardTitle);
         cardBody.appendChild(cardPrice);
-        cardBody.appendChild(cardCartButton);
         card.appendChild(cardBody);
-        col.appendChild(card);
-        productsDiv.appendChild(col)
-        cardCartButton.onclick = () => addToCart(product.id);
-      }
-    };
+        return card
+    }
     
-    const searchClicked = () => {
-      const search = document.getElementById("searchInput").value;
+    const renderProduct = (product) => {
+      if (!(document.getElementById("card" + product.id))) {
+      const col = document.createElement("div");
+      col.classList.add("col-md-3");
+      const card = makeCard(product);
+      const cardCartButton = document.createElement("button");
+      cardCartButton.innerText = "Add to cart";
+      col.appendChild(card);
+      document.getElementById("products").appendChild(col)
+      console.log(document.getElementById("products").innerHTML);
+      document.getElementById("cardBody" + product.id).appendChild(cardCartButton);
+      cardCartButton.onclick = () => addToCart(product);
+      }
+    }
 
-      fetch('https://dummyjson.com/products/search?q=' + search)
-        .then(res => res.json())
-        .then(data => {
-          renderProducts(data.products);
-        })
-        .catch(error => {
-          console.error('Error fetching products:', error);
-        });
+
+    const addToCart = (product) => {
+      const itemCard = makeCard(product, "cart");
+      const removeItemButton = document.createElement("button");
+      removeItemButton.innerText = "Remove Item";
+      document.getElementById("cartModal").appendChild(itemCard);
+      document.getElementById("cartcardBody" + product.id).appendChild(removeItemButton);
     }
-    const addToCart = (id) => {
-      cart.push('https://dummyjson.com/products/1')
-    }
+
 
     const openCart = () => {
       document.getElementById("cartModal").showModal();
@@ -81,13 +90,17 @@ function App() {
     const closeCart = () =>{
       document.getElementById("cartModal").close();
     }
-    const productsDiv = createProductsDiv();
-    fetchAndRenderProducts("");
+    
+    createProductsDiv();
+    displayAll();
     document.getElementById("searchButton").onclick = () => searchClicked ();
     document.getElementById("cartButton").onclick = () => openCart ();
     document.getElementById("closeCartButton").onclick = () => closeCart ();
+    document.getElementById("products").innerHTML = "";
+
+    
     return () => {
-      document.body.removeChild(productsDiv);
+      document.body.removeChild(document.getElementById("products"));
     };
   }, []);
 
