@@ -28,21 +28,22 @@ function App() {
       const search = document.getElementById("searchInput").value.trim().toUpperCase();
       document.getElementById("products").innerHTML = "";
       fetch('https://dummyjson.com/products').then(res => res.json()).then(data => {
-      for (const key in data.products) {
-        if (data.products[key].title.toUpperCase().includes(search) || data.products[key].category.toUpperCase().includes(search)) {
-          renderProduct(data.products[key])
+        for (const key in data.products) {
+          if (data.products[key].title.toUpperCase().includes(search) || data.products[key].category.toUpperCase().includes(search)) {
+            renderProduct(data.products[key])
+          }
         }
-      }
-    });
+      });
+      document.getElementById("searchInput").value = "";
     }
 
     const makeCard = (product, cart = "") => {
         const card = document.createElement("div");
         card.id = cart + "card" + product.id;
-        card.classList.add("card", "mb-4", "shadow-sm");
+        card.classList.add(cart + "cardStyle");
         const cardBody = document.createElement("div");
         cardBody.id = cart + "cardBody" + product.id;
-        cardBody.classList.add("card-body");
+        cardBody.classList.add("cardBody")
         const cardTitle = document.createElement("h5");
         cardTitle.innerText = product.title;
         const cardPrice = document.createElement("p");
@@ -61,10 +62,11 @@ function App() {
     const renderProduct = (product) => {
       if (!(document.getElementById("card" + product.id))) {
       const col = document.createElement("div");
-      col.classList.add("col-md-3");
+      col.classList.add("col-md-3", "colStyle");
       const card = makeCard(product);
       const cardCartButton = document.createElement("button");
       cardCartButton.innerText = "Add to cart";
+      cardCartButton.classList.add("addToCartButton");
       col.appendChild(card);
       document.getElementById("products").appendChild(col)
       console.log(document.getElementById("products").innerHTML);
@@ -84,6 +86,7 @@ function App() {
         const itemCard = makeCard(product, "cart");
         const removeItemButton = document.createElement("button");
         removeItemButton.innerText = "Remove Item";
+        removeItemButton.classList.add("removeItemButton")
         document.getElementById("cartModal").appendChild(itemCard);
         document.getElementById("cartcardBody" + product.id).appendChild(removeItemButton);
         removeItemButton.onclick = () => removeItemFromCart(product);
@@ -117,7 +120,7 @@ function App() {
   
   return (
     <>
-      <h1 className="container">Products</h1>
+      <h1 id="productsHeading">Products</h1>
       <input id="searchInput"></input>
       <button id="searchButton">Search</button>
       <button id="cartButton">Cart</button>

@@ -11,3 +11,101 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+#cartButton {
+  margin-top: 25px;
+  margin-bottom: 10px;
+  margin-left: 5px;
+  background-color: rgb(182,182,213);
+}
+
+#cartButton:hover {
+  background-color: rgb(167, 167, 198);
+}
+
+#searchButton {
+  margin-top: 25px;
+  margin-bottom:25px;
+  margin-left: 5px;
+  background-color: rgb(34,35,55);
+  color: white;
+}
+
+#searchButton:hover {
+  background-color: rgb(14,15,35)
+}
+
+button {
+  transition-duration: 0.2s;
+  border-radius: 8px;
+}
+
+.colStyle {
+  display: flex;
+  align-items: stretch;
+}
+
+#products {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cardStyle {
+  border-width: 2px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 10px;
+  padding-bottom: 45px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+.addToCartButton {
+  position: absolute;
+  bottom: 20px;
+  background-color: rgb(233,227,241);
+  margin-left: 10%;
+}
+
+.addToCartButton:hover {
+  background-color: rgb(218,212,226);
+}
+
+#searchInput {
+  margin-left: 15%;
+}
+
+#productsHeading {
+  margin-top: 40px;
+  margin-left: 10%;
+}
+
+#cartModal {
+  height: 70%;
+  width: 70%;
+}
+
+.cartcardStyle {
+  width: 30%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 10px;
+}
+
+.removeItemButton {
+  background-color: rgb(233,227,241);
+}
+
+.removeItemButton:hover {
+  background-color: rgb(218,212,226);
+}
+
+#closeCartButton {
+  background-color: rgb(250, 160, 160);
+}
+
+#closeCartButton:hover {
+  background-color: rgb(235, 145, 145);
+}
