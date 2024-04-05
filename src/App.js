@@ -5,15 +5,6 @@ function App() {
   useEffect(() => {
 
 
-    const displayAll = () => {
-      fetch('https://dummyjson.com/products').then(res => res.json()).then(data => {
-        for (const key in data.products) {
-          renderProduct(data.products[key])
-        }
-      });
-    }
-
-
     const createProductsDiv = () => {
       const productsDiv = document.createElement("div");
       productsDiv.innerHTML = "";
@@ -24,7 +15,7 @@ function App() {
     };
 
     
-    const searchClicked = () => {
+    const displayNecessary = () => {
       const search = document.getElementById("searchInput").value.trim().toUpperCase();
       document.getElementById("products").innerHTML = "";
       fetch('https://dummyjson.com/products').then(res => res.json()).then(data => {
@@ -105,8 +96,8 @@ function App() {
     
 
     createProductsDiv();
-    displayAll();
-    document.getElementById("searchButton").onclick = () => searchClicked ();
+    displayNecessary();
+    document.getElementById("searchButton").onclick = () => displayNecessary ();
     document.getElementById("cartButton").onclick = () => openCart ();
     document.getElementById("closeCartButton").onclick = () => closeCart ();
     document.getElementById("products").innerHTML = "";
