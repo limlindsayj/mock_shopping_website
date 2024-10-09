@@ -1,71 +1,42 @@
-# Getting Started with Create React App
+# Mock Shopping Website
+  This website was created as a self practice project. Scroll through the products and add or remove them from the cart! Try searching for products in the searchbar too!
+  
+## Built With
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+* JavaScript
+* CSS
+* HTML
+* Bootstrap
+* React
 
-## Available Scripts
+## Features
+After setting up this project locally, use this command to run it: 
+```npm start```
+### Scroll through products
+<img width="1118" alt="image" src="https://github.com/user-attachments/assets/2a137d44-2479-43f7-865b-8c17f69bbb2e">
+Scroll through the items organized on the page! Names and prices are also listed under a photo icon of each item.
 
-In the project directory, you can run:
+### Add items to cart
+<img width="219" alt="image" src="https://github.com/user-attachments/assets/451d4ef0-1197-4aef-a907-89528f128138"><br />
+Click the "Add to cart" button to add an item to your cart. 
+<img width="369" alt="image" src="https://github.com/user-attachments/assets/cd3d97b2-55f8-45fe-bbcb-c533da027d69"><br />
+Find the "Cart" button at the top of the page to view items in your cart. 
+<img width="1039" alt="image" src="https://github.com/user-attachments/assets/cb0a0db0-2682-464d-8fa5-e7c7187882f3"><br />
+Congratulations! You just added a new item to your cart!
+<img width="1000" alt="image" src="https://github.com/user-attachments/assets/ced44f97-ed17-4326-91ef-871740198772"><br/>
+You are also free to add multiple items to the cart!
 
-### `npm start`
+### Remove items from cart
+Click the remove item button under the item in the cart to remove that item from the cart. 
+<img width="1035" alt="image" src="https://github.com/user-attachments/assets/3511e7f9-0744-47e5-bd93-42e40cb2a290"><br/>
+The apple is now removed!
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Search for items
+<img width="471" alt="image" src="https://github.com/user-attachments/assets/cb6f3ef7-27b7-4db6-a1d6-3013f4396098"><br/>
+Find the searchbar at the top of the page. Type in any part of the name of a product to search for items. For example, a search for "annibale" would get the results: 
+<img width="582" alt="image" src="https://github.com/user-attachments/assets/872883d5-f64f-44ff-ae87-775bbd2d7b3f">
+Searches are not case sensitive.
+<br/>
+To reset the search, simply press the "Search" button with the searchbar empty and all the products will be listed again!
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-# mock_shopping_website
+### Happy shopping!
